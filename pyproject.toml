@@ -1,2 +1,41 @@
+<<<<<<< HEAD
 [tool.vercel] 
 entrypoint = "src.fraudguard.api.app:app" 
+=======
+[project]
+name = "fraudguard"
+version = "1.0.0"
+description = "Credit card fraud detection with explainable decisions"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "S", "C4", "SIM", "RUF"]
+ignore = [
+  "S101",   # assert: used throughout the test suite
+  "B008",   # FastAPI's Depends() in defaults is the documented pattern
+  "N818",   # DatasetError reads better than DatasetException
+  "N803",   # X / X_train: the universal convention for a feature matrix
+  "N806",
+  "E501",   # long lines are caught by the formatter, not the linter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106", "S311", "SIM115", "RUF059"]  # test credentials, seeded randomness
+"src/fraudguard/data/generate.py" = ["S311"]  # synthetic data, not cryptographic
+
+[tool.mypy]
+python_version = "3.12"
+warn_unused_ignores = true
+no_implicit_optional = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.vercel]
+entrypoint = "src.fraudguard.api.app:app"
+>>>>>>> 995acf5 (Configure FastAPI entrypoint for Vercel)
