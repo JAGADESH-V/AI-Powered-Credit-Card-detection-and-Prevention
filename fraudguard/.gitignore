@@ -1,0 +1,13 @@
+.env
+*.env
+!.env.example
+artifacts/
+data/
+*.joblib
+*.jsonl
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.mypy_cache/
+.ruff_cache/

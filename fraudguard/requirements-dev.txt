@@ -1,0 +1,19 @@
+-r requirements.txt
+
+# ---- testing ----
+pytest>=8.3
+pytest-asyncio>=0.24
+httpx>=0.28
+
+# ---- quality ----
+ruff>=0.8
+mypy>=1.13
+
+# ---- security scanning ----
+bandit>=1.8                 # static analysis of our own code
+pip-audit>=2.7              # known CVEs in dependencies
+
+# ---- analysis & dashboard ----
+shap>=0.46                  # exact Shapley values for case review
+streamlit>=1.40
+requests>=2.32

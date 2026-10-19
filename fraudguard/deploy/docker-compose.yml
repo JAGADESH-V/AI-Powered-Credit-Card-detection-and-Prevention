@@ -1,0 +1,44 @@
+# Reference deployment. The security posture here is the point:
+# read-only root filesystem, dropped capabilities, no privilege escalation.
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    read_only: true
+    user: "10001:10001"
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    volumes:
+      - audit:/var/audit
+    environment:
+      FG_ENVIRONMENT: prod
+      FG_REDIS_URL: redis://redis:6379/0
+      FG_ARTIFACT_DIR: /var/audit
+    env_file: [../.env]
+    depends_on:
+      redis: {condition: service_healthy}
+    ports: ["127.0.0.1:8000:8000"]   # bound to loopback; TLS terminates upstream
+    deploy:
+      resources:
+        limits: {cpus: "2.0", memory: 2G}
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "512mb", "--maxmemory-policy", "allkeys-lru"]
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  audit:

@@ -1,0 +1,20 @@
+# ---- core ML ----
+scikit-learn>=1.6,<2.0      # 1.6+ for FrozenEstimator calibration
+pandas>=2.2,<3.0
+numpy>=1.26,<3.0
+joblib>=1.4,<2.0
+
+# ---- api ----
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.32,<1.0
+pydantic>=2.10,<3.0
+pydantic-settings>=2.6,<3.0
+
+# ---- security ----
+cryptography>=44.0          # authenticated encryption
+argon2-cffi>=23.1           # credential hashing
+pyjwt>=2.10                 # explicit algorithm allow-list
+
+# ---- state ----
+redis>=5.2                  # velocity windows, rate limits, nonces
+SQLAlchemy>=2.0             # keys, scored transactions, case decisions
