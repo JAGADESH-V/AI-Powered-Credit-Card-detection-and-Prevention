@@ -1,0 +1,2 @@
+[tool.vercel] 
+entrypoint = "src.fraudguard.api.app:app" 
